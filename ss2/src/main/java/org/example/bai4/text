@@ -1,0 +1,41 @@
+1. Tường lửa dữ liệu và Phòng thủ XSS
+XSS (Cross-Site Scripting) là gì?
+XSS là lỗ hổng bảo mật xảy ra khi một ứng dụng web hiển thị dữ liệu do người dùng nhập vào mà không được kiểm tra hoặc mã hóa (escape) đúng cách. Kẻ tấn công có thể chèn các đoạn mã script (thường là JavaScript) vào trang web. Khi người dùng khác truy cập trang đó, trình duyệt sẽ thực thi mã độc này, dẫn đến mất cắp cookie, session hoặc điều hướng người dùng sang trang web giả mạo.
+
+Tại sao <c:out> an toàn hơn ${keyword}?
+
+${keyword} (EL thuần): Sẽ in trực tiếp nội dung biến ra HTML. Nếu nội dung là một thẻ <script>, trình duyệt sẽ hiểu đó là lệnh thực thi.
+
+<c:out>: Mặc định có thuộc tính escapeXml="true". Nó sẽ tự động chuyển đổi các ký tự nhạy cảm của HTML thành các thực thể an toàn (HTML Entities).
+2. Cấu trúc rẽ nhánh JSTL: <c:if> vs <c:choose>
+Sự khác nhau:
+
+<c:if>: Tương đương với lệnh if đơn lẻ. Nó chỉ kiểm tra một điều kiện duy nhất. Nếu muốn xử lý trường hợp "ngược lại", bạn phải viết thêm một thẻ <c:if> khác với điều kiện phủ định.
+
+<c:choose>: Tương đương với cấu trúc if-else if-else (hoặc switch-case). Nó cho phép kiểm tra nhiều điều kiện loại trừ lẫn nhau và có phần <c:otherwise> để xử lý trường hợp mặc định.
+
+Trong bài này nên dùng loại nào cho "Giá vé" và "Vé còn lại"?
+
+Nên dùng: <c:choose>.
+
+Tại sao: Vì cả hai phần này đều có từ 3 trạng thái trở lên (Giá: Miễn phí / Có phí; Vé: Hết vé / Sắp hết / Còn nhiều). Sử dụng <c:choose> giúp code sạch hơn, dễ đọc hơn và quan trọng là tăng hiệu năng vì khi một điều kiện đã thỏa mãn, các điều kiện sau sẽ không cần kiểm tra nữa.
+
+3. Tầm quan trọng của <c:url> và Context Path
+Giải quyết vấn đề gì so với hardcode?
+Khi bạn hardcode href="/events/1/book", dấu / ở đầu đại diện cho Server Root (thường là localhost:8080/). Tuy nhiên, trong thực tế, ứng dụng Java Web thường được deploy dưới một tên cụ thể (Context Path).
+
+Điều gì xảy ra khi ứng dụng deploy với context path /ticketing?
+
+Nếu dùng Hardcode (/events/1/book):
+
+Trình duyệt sẽ gọi: http://localhost:8080/events/1/book.
+
+Kết quả: Lỗi 404 Not Found (vì URL đúng phải là localhost:8080/ticketing/events/...).
+
+Nếu dùng <c:url value="/events/1/book"/>:
+
+Thẻ này sẽ tự động kiểm tra Context Path của ứng dụng.
+
+Kết quả: Nó sẽ sinh ra HTML là <a href="/ticketing/events/1/book">. Ứng dụng chạy hoàn hảo mà không cần sửa code.
+
+Ngoài ra: <c:url> còn hỗ trợ tự động URL Rewriting (thêm ;jsessionid=...) nếu người dùng tắt Cookie, giúp duy trì phiên đăng nhập (Session) ổn định.
