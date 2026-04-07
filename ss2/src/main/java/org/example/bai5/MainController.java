@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @SessionAttributes({"loggedUser", "role"})
@@ -50,8 +51,9 @@ public class MainController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, SessionStatus sessionStatus) {
         session.invalidate();
+        sessionStatus.setComplete();
         return "redirect:/loginbai5";
     }
 }

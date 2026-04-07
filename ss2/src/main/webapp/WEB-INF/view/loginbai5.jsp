@@ -39,7 +39,7 @@
 
   <div style="margin-top: 15px; font-size: 0.8em; color: #666;">
     <p>Gợi ý Manager: manager123 / 123456</p>
-    <p>Gợi ý Staff: staff / staff456</p>
+    <p>Gợi ý Staff: staff123 / staff456</p>
   </div>
 </div>
 
