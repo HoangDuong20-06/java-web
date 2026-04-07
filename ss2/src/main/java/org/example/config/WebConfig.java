@@ -1,4 +1,4 @@
-package org.example.bai1;
+package org.example.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +7,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "org.example.bai1")
+@ComponentScan(basePackages = "org.example.bai3")
 public class WebConfig {
 
     @Bean

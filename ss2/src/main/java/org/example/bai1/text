@@ -1,0 +1,23 @@
+1.Lỗi trong MyWebAppInitializer.java (Servlet Mapping)
+Tại sao /api/* gây lỗi 404 cho /welcome: Khi bạn cấu hình Servlet Registration với mapping là /api/*, bạn đang ra lệnh cho DispatcherServlet rằng: "Chỉ những yêu cầu nào bắt đầu bằng cụm /api/ thì mới chuyển cho Spring xử lý".
+Vì URL /welcome không bắt đầu bằng /api/, Tomcat sẽ không gửi request này cho Spring. Thay vào đó, Tomcat tự đi tìm một file vật lý hoặc một Servlet khác khớp với /welcome. Do không tìm thấy, nó trả về lỗi 404 Not Found.
+
+DispatcherServlet đang nghe những URL nào: Với cấu hình này, nó chỉ nghe các URL có dạng: localhost:8080/context-path/api/home, localhost:8080/context-path/api/login, v.v.
+
+2.Lỗi trong WebConfig.java (Component Scan)
+Hậu quả: Việc cấu hình @ComponentScan(basePackages = "com.demo.service") khiến Spring chỉ quét các Class nằm trong package service (thường là nơi đặt @Service). Các tầng khác nằm ngoài package này sẽ bị bỏ qua hoàn toàn trong quá trình khởi tạo Bean.
+
+Spring tìm @Controller ở đâu: Nó chỉ tìm thấy các @Controller nếu bạn lỡ đặt chúng bên trong package com.demo.service.
+
+Không tìm thấy ở đâu: Nó sẽ không thể tìm thấy bất kỳ Controller nào nằm ở các package đúng chuẩn như com.demo.controller. Kết quả là dù bạn có viết code Controller đúng đến đâu, Spring cũng không biết sự tồn tại của chúng để điều hướng request.
+
+3.Tổng hợp: Chỉ sửa lỗi 1 mà không sửa lỗi 2
+Kết quả: Ứng dụng vẫn KHÔNG chạy được (vẫn báo lỗi 404).
+
+Tại sao: * Khi bạn sửa lỗi 1 (đổi mapping thành /), DispatcherServlet đã nhận được request /welcome.
+
+Tuy nhiên, khi nhận được request, DispatcherServlet sẽ tra cứu trong "bản đồ điều hướng" (Handler Mapping) để xem có Controller nào nhận xử lý /welcome không.
+
+Do lỗi 2 chưa sửa, Spring không quét thấy Controller, bản đồ điều hướng trống trơn.
+
+Vì không tìm thấy "người xử lý", Spring lại tiếp tục báo 404 hoặc lỗi không tìm thấy Handler.

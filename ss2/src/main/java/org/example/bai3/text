@@ -1,0 +1,46 @@
+1.Phân tích Thông báo lỗi Đăng nhập (Request Scope vs. Session Scope)
+Tại sao nên dùng Request Scope:
+Thông báo lỗi đăng nhập là loại dữ liệu có tính chất "tạm thời" và "tức thì". Nó chỉ có giá trị ngay tại thời điểm người dùng vừa thực hiện một hành động sai (nhập sai mật khẩu). Khi dùng Request Scope, thông báo này sẽ tự động bị hủy ngay sau khi trang phản hồi được gửi về trình duyệt.
+
+Hậu quả khi lưu vào Session Scope:
+Nếu lưu vào Session, thông báo lỗi sẽ tồn tại xuyên suốt phiên làm việc của người dùng cho đến khi session bị xóa hoặc server restart.
+
+Trạng thái "ám": Sau khi nhập sai, người dùng thấy lỗi. Họ nhấn F5 hoặc chuyển sang trang khác rồi quay lại, dòng chữ "Sai mật khẩu" vẫn hiện ra dù họ chưa làm gì thêm.
+
+Trải nghiệm tệ: Thậm chí khi họ đã đăng nhập thành công ở một tab khác, tab cũ vẫn có thể hiển thị thông báo lỗi cũ, gây bối rối cho người dùng.
+
+2. Phân tích Bộ đếm totalViewCount (Application Scope vs. Session Scope)
+Tại sao phải dùng Application Scope:
+Yêu cầu của hệ thống là đếm tổng lượt xem của toàn bộ cửa hàng (tất cả nhân viên cộng lại). Application Scope là vùng nhớ duy nhất được chia sẻ cho mọi người dùng và tồn tại trong suốt vòng đời của ứng dụng.
+
+Sự khác biệt nếu dùng Session Scope:
+Nếu dùng Session, mỗi nhân viên sẽ sở hữu một bộ đếm riêng biệt nằm trong "túi" của họ.
+
+Ví dụ: Nhân viên A xem đơn hàng 5 lần sẽ thấy số 5. Nhân viên B vừa đăng nhập vào sẽ thấy số 1 (vì session của B mới khởi tạo). Con số này không phản ánh đúng quy mô hoạt động chung của toàn hệ thống.
+
+3. Vấn đề Race Condition và Giải pháp
+Race Condition là gì?
+Race Condition (Tình trạng tranh chấp) xảy ra trong môi trường đa luồng khi nhiều luồng (nhiều request từ nhiều nhân viên) cùng truy cập và sửa đổi một dữ liệu dùng chung (Application Scope) tại cùng một thời điểm. Kết quả cuối cùng phụ thuộc vào việc "ai nhanh hơn", dẫn đến dữ liệu bị sai lệch.
+
+Tại sao đoạn code mẫu tiềm ẩn Race Condition?
+Đoạn code thực hiện 3 bước: (1) Lấy giá trị cũ -> (2) Tăng lên 1 -> (3) Ghi đè giá trị mới.
+
+Kịch bản lỗi: 1.  Nhân viên A và B cùng truy cập. Cả hai cùng đọc được count = 10.
+2.  Nhân viên A tăng lên 11 nhưng chưa kịp ghi vào Application.
+3.  Nhân viên B cũng tăng lên 11 (vì lúc nãy đọc là 10).
+4.  Cả A và B lần lượt ghi giá trị 11 vào Application.
+
+Hậu quả: Có 2 lượt xem nhưng bộ đếm chỉ tăng thêm 1. Dữ liệu bị mất mát.
+
+Đề xuất cách phòng tránh (Cải thiện code)
+Để xử lý vấn đề này, chúng ta cần đảm bảo tính Atomic (nguyên tử) - nghĩa là tại một thời điểm chỉ một luồng được thực hiện việc đọc/ghi.
+
+Sử dụng khối synchronized (Truyền thống)
+
+Java
+ServletContext application = request.getServletContext();
+synchronized (application) {
+    Integer count = (Integer) application.getAttribute("totalViewCount");
+    if (count == null) count = 0;
+    application.setAttribute("totalViewCount", count + 1);
+}

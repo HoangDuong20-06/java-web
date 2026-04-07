@@ -1,0 +1,29 @@
+Vấn đề 1: Xung đột luồng (Race Condition)
+
+Vị trí: <%! private int requestCounter = 0; %>
+
+Mô tả: Thẻ Declaration tạo ra biến dùng chung cho mọi người dùng (Servlet Singleton). Khi nhiều người truy cập cùng lúc, việc cộng dồn biến này không được đồng bộ sẽ dẫn đến kết quả sai lệch, không phản ánh đúng số lượt truy cập thực tế.
+
+Vấn đề 2: Lộ lọt thông tin nhạy cảm (HTML Comment)
+
+Vị trí: ``
+
+Mô tả: Đây là chú thích phía Client. Khi người dùng chuột phải chọn "View Page Source" trên trình duyệt, họ sẽ đọc được toàn bộ nội dung này. Nếu chú thích chứa logic nghiệp vụ hoặc ghi chú về database, kẻ xấu có thể lợi dụng để tấn công hệ thống.
+
+Vấn đề 3: Lỗi cú pháp biên dịch (Semicolon in Expression)
+
+Vị trí: <%= biến_hoặc_hàm; %> (có dấu ; ở cuối)
+
+Mô tả: Thẻ Expression bản chất là lệnh out.print(). Nếu bạn thêm dấu chấm phẩy bên trong, mã Java sẽ bị thừa cú pháp (ví dụ: out.print(data;);). Điều này khiến trang JSP bị lỗi 500 ngay lập tức và không thể hiển thị.
+
+Vấn đề 4: Vi phạm mô hình MVC (Logic in View)
+
+Vị trí: Các đoạn mã <% ... %> chứa truy vấn Database hoặc tính toán phức tạp.
+
+Mô tả: Việc nhồi nhét logic xử lý vào trang JSP làm mã nguồn trở nên "Spaghetti" (rối rắm). Hậu quả là cực kỳ khó bảo trì, khó tìm lỗi và đi ngược lại hoàn toàn với nguyên lý phân tách trách nhiệm của Spring MVC.
+
+Vấn đề 5: Tấn công mã độc gián tiếp (XSS - Cross-Site Scripting)
+
+Vị trí: <%= request.getParameter("name") %>
+
+Mô tả: Việc in trực tiếp dữ liệu từ người dùng mà không qua bộ lọc mã hóa sẽ cho phép tin tặc chèn các đoạn mã <script> độc hại. Kẻ tấn công có thể dùng lỗi này để đánh cắp Session ID, lấy trộm tài khoản hoặc điều hướng người dùng sang web lừa đảo.
