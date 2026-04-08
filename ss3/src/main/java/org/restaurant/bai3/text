@@ -1,0 +1,8 @@
+Vị trí của số 5: Trong Cách A, số 5 đóng vai trò là một phần của đường dẫn định danh (URI Path Segment). \
+Trong Cách B, số 5 là một giá trị của tham số truy vấn (Query Parameter) nằm sau dấu hỏi chấm.
+
+Lựa chọn: Tôi chọn Cách A (/bai3/orders/5 dùng @PathVariable).
+
+Lý do: Theo tiêu chuẩn thiết kế RESTful API, khi muốn xác định một tài nguyên cụ thể (như một đơn hàng duy nhất),
+chúng ta nên dùng Path Variable để biến ID thành một phần của địa chỉ tài nguyên.
+Cách B thường chỉ dùng khi chúng ta muốn lọc (filter), sắp xếp (sort) hoặc phân trang danh sách.

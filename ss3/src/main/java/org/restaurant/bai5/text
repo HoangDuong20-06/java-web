@@ -1,0 +1,16 @@
+Giải thích về "Bẫy dữ liệu ép kiểu"
+Khi nhân viên nhập /bai5/orders/t, Spring sẽ cố gắng ép kiểu chữ t sang Long. Quá trình này thất bại và ném ra MethodArgumentTypeMismatchException.
+Thay vì để ứng dụng hiện trang lỗi 500 hoặc 400 mặc định của hệ thống, việc sử dụng @ExceptionHandler giúp ta "túm"
+lấy ngoại lệ đó và trả về một câu thông báo tiếng Việt thân thiện, giúp nhân viên biết chính xác mình sai ở đâu mà không làm hệ thống "trông có vẻ" bị sập.
+
+Tính Idempotent (Tính lặp lại)
+Đây là điểm mấu chốt để giải quyết vấn đề mạng lag:
+
+Tại sao DELETE an toàn (Idempotent)?
+Phương thức DELETE có tính Idempotent. Nghĩa là dù bạn bấm 1 lần hay 100 lần với cùng một ID, kết quả cuối cùng vẫn như nhau: Đơn hàng đó bị xóa khỏi hệ thống.
+Lần đầu bấm là xóa, các lần sau hệ thống chỉ xác nhận lại là đơn hàng không còn tồn tại. Nó không gây ra tác dụng phụ tiêu cực nào cho dữ liệu.
+
+Tại sao POST rủi ro (Non-idempotent)?
+Phương thức POST không có tính Idempotent. Mỗi lần nhân viên bấm "Lưu đơn", trình duyệt sẽ gửi một yêu cầu tạo mới.
+Nếu bấm 3 lần vì tưởng lag, hệ thống sẽ thực hiện lệnh "Tạo mới" 3 lần, dẫn đến việc sinh ra 3 đơn hàng giống hệt nhau (đơn hàng rác),
+gây thất thoát hoặc sai lệch kho bãi/doanh thu.
