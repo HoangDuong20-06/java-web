@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: html_head}"></head>
+<body>
+<div th:replace="~{layout :: header}"></div>
+
+<div style="width: 50%; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
+    <h3>Thông tin chi tiết</h3>
+    <p><strong>Mã sách:</strong> <span th:text="${selectedBook.id}"></span></p>
+    <p><strong>Tên sách:</strong> <span th:text="${selectedBook.bookName}"></span></p>
+    <p><strong>Tác giả:</strong> <span th:text="${selectedBook.author}"></span></p>
+    <p><strong>Giá tiền:</strong> <span th:text="${#numbers.formatDecimal(selectedBook.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></p>
+
+    <br>
+    <a th:href="@{/books}">&larr; Quay lại danh sách tổng</a>
+</div>
+
+<div th:replace="~{/layout :: footer}"></div>
+</body>
+</html>
