@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Thành công</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="alert alert-success">
+        <h3 th:text="${message}">Đặt món thành công!</h3>
+        <p>Tổng tiền: <span th:text="${total}">0</span> VNĐ</p>
+    </div>
+
+    <a class="btn btn-primary" th:href="@{/bai5/dishes}">
+        Về menu
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main-layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách món ăn</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Danh sách thực đơn</h2>
+    </div>
+
+    <div th:if="${dishes == null or #lists.isEmpty(dishes)}" class="alert alert-warning text-center shadow-sm">
+        <p class="mb-0">Hiện tại nhà hàng đang cập nhật thực đơn, vui lòng quay lại sau!</p>
+    </div>
+
+    <div class="card shadow-sm" th:unless="${dishes == null or #lists.isEmpty(dishes)}">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th class="ps-4">ID</th>
+                    <th>Tên món ăn</th>
+                    <th>Giá bán</th>
+                    <th>Trạng thái</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="dish : ${dishes}">
+                    <td class="ps-4" th:text="${dish.id}"></td>
+                    <td><strong th:text="${dish.name}"></strong></td>
+                    <td th:text="${#numbers.formatDecimal(dish.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+                    <td>
+                        <span th:if="${dish.available}" class="badge bg-success">Còn hàng</span>
+                        <span th:unless="${dish.available}" class="badge bg-danger">Hết hàng</span>
+                    </td>
+                    <td class="text-center">
+                        <a th:href="@{/bai3/edit/{id}(id=${dish.id})}" class="btn btn-sm btn-outline-primary">
+                            Chỉnh sửa
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

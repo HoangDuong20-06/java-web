@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Giỏ hàng</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <h2 class="mb-4">🛒 Giỏ hàng</h2>
+
+    <table class="table table-bordered bg-white">
+        <thead class="table-dark">
+        <tr>
+            <th>Tên món</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Tổng</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="item : ${cart}">
+            <td th:text="${item.dish.name}"></td>
+            <td th:text="${item.dish.price}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.dish.price * item.quantity}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h4>
+        Tổng tiền:
+        <span th:text="${total}">0</span> VNĐ
+    </h4>
+
+    <form th:action="@{/bai5/order/checkout}" method="post">
+        <button class="btn btn-success">Đặt món</button>
+    </form>
+
+    <form th:action="@{/bai5/order/clear}" method="post" class="mt-2">
+        <button class="btn btn-danger">Xoá giỏ</button>
+    </form>
+
+</div>
+
+</body>
+</html>

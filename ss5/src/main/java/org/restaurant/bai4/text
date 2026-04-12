@@ -1,0 +1,35 @@
+1. So sánh 2 cách
+(A) Copy-paste Header/Footer
+Dễ làm, không cần cấu hình
+Code bị lặp lại nhiều
+Khó bảo trì (sửa 1 chỗ phải sửa nhiều file)
+Dễ gây lỗi không đồng bộ
+Không phù hợp dự án lớn
+Chỉ hợp demo hoặc project nhỏ
+🟢 (B) Dùng layout:decorate
+Tái sử dụng layout (header, footer dùng chung)
+Code gọn, sạch (clean code)
+Dễ bảo trì (chỉ sửa 1 file layout)
+Giảm trùng lặp code
+Phù hợp dự án vừa và lớn
+Chuyên nghiệp hơn
+ết luận
+Nên dùng layout:decorate trong thực tế
+Copy-paste chỉ nên dùng khi làm nhanh / demo
+2. Vì sao phải đăng ký LayoutDialect
+Thymeleaf mặc định không hiểu:
+layout:decorate
+layout:fragment
+Các thuộc tính layout:* thuộc về Layout Dialect (thư viện mở rộng)
+Nếu không đăng ký
+Layout không hoạt động
+Các thẻ layout:* bị bỏ qua
+Trang không kế thừa layout
+Khi đăng ký
+SpringTemplateEngine sẽ:
+Nhận diện layout:*
+Xử lý ghép layout + nội dung
+Kích hoạt cơ chế template kế thừa
+Kết luận
+Phải đăng ký LayoutDialect để Thymeleaf hiểu và xử lý layout
+Đây là cơ chế mở rộng (Dialect) của Thymeleaf

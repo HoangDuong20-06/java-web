@@ -1,0 +1,22 @@
+1. Mô tả luồng dữ liệu (Data Flow)
+Người dùng nhấn nút “Sửa” ở View A (danh sách món ăn)
+View gửi request kèm theo ID món ăn (ví dụ: /bai3/edit/10)
+Controller nhận request:
+Lấy id từ URL (@PathVariable)
+Controller gọi Service:
+service.getDishById(id)
+Service truy vấn dữ liệu (Repository / danh sách giả lập)
+Controller:
+Nếu tìm thấy → đưa object Dish vào Model
+Trả về View B (edit-dish.html)
+View B:
+Nhận dữ liệu và hiển thị lên form cho người dùng chỉnh sửa
+2. Biểu thức Thymeleaf dùng để binding
+th:object="${dish}"
+Gắn object từ Controller vào form
+th:field="*{id}"
+Binding dữ liệu vào input id
+th:field="*{name}"
+Binding tên món
+th:field="*{price}"
+Binding giá

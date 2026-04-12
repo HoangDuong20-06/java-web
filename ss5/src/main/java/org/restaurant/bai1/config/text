@@ -1,0 +1,19 @@
+@Bean
+
+    public SpringResourceTemplateResolver templateResolver() {
+
+        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+
+        resolver.setPrefix("/WEB-INF/views");
+
+        resolver.setSuffix(".jsp");
+
+        resolver.setCharacterEncoding("UTF-8");
+
+        return resolver;
+
+    }
+    2 dòng này sai vì
+    resolver.setPrefix("/WEB-INF/views");  phải là templates chứ ko phải views
+
+    resolver.setSuffix(".jsp"); phải là .html chứ ko phải .jsp

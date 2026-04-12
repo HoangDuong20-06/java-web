@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Lỗi</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="alert alert-danger shadow-sm">
+        <h4>Có lỗi xảy ra</h4>
+        <p th:text="${errorMessage}">
+            Không tìm thấy món ăn!
+        </p>
+    </div>
+
+    <a class="btn btn-primary" th:href="@{/bai5/dishes}">
+        Quay lại menu
+    </a>
+
+</div>
+
+</body>
+</html>
