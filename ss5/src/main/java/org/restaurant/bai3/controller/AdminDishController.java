@@ -23,17 +23,16 @@ public class AdminDishController {
         Dish dish = dishService.findById(id);
         if (dish == null) {
             model.addAttribute("error", "Không tìm thấy món ăn yêu cầu!");
-            return "redirect:/bai2/dishes";
+            return "redirect:/bai2/dished";
         }
 
         model.addAttribute("dish", dish);
-
         return "edit-dish";
     }
     @PostMapping("/bai3/update")
     public String updateDish(@ModelAttribute("dish") Dish dish, RedirectAttributes redirectAttributes) {
         dishService.update(dish);
         redirectAttributes.addFlashAttribute("success", "Cập nhật thành công!");
-        return "redirect:/bai2/dishes";
+        return "redirect:/bai2/dished";
     }
 }

@@ -1,7 +1,7 @@
 package org.restaurant.bai5.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.restaurant.bai2.modal.Dish;
+import org.restaurant.bai5.modal.Dish;
 import org.restaurant.bai5.modal.OrderItem;
 import org.restaurant.bai5.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;

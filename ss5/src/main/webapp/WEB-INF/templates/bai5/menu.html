@@ -32,7 +32,7 @@
             <td th:text="${#numbers.formatDecimal(dish.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
             <td>
                 <a class="btn btn-sm btn-primary"
-                   th:href="@{'/bai5/dished/' + ${dish.id}}">
+                   th:href="@{'/bai5/dishes/' + ${dish.id}}">
                     Xem
                 </a>
             </td>

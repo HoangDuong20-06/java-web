@@ -1,6 +1,6 @@
 package org.restaurant.bai5.controller;
 
-import org.restaurant.bai2.modal.Dish;
+import org.restaurant.bai5.modal.Dish;
 import org.restaurant.bai5.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

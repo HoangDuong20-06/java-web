@@ -13,7 +13,7 @@ public class ProductController {
             @RequestParam("limit") Integer limit,
             ModelMap model
     ) {
-        model.addAttribute("cate", category)
+        model.addAttribute("category", category)
                 .addAttribute("lim", limit)
                 .addAttribute("msg", "Hệ thống đã tìm thấy các món ăn phù hợp!");
         return "productList";

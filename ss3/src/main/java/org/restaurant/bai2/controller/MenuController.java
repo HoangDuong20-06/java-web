@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MenuController {
     private final OrderService orderService;
-
     public MenuController(OrderService orderService) {
         this.orderService = orderService;
     }
@@ -19,7 +18,7 @@ public class MenuController {
     ) {
         return "Thực đơn phân loại theo: " + category;
     }
-    @GetMapping("/bai2/orders")
+    @GetMapping("/bai2/order")
     @ResponseBody
     public String getAllOrders() {
         return orderService.getAllOrders();

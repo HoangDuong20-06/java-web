@@ -1,7 +1,7 @@
 package org.restaurant.bai5.service;
 
 
-import org.restaurant.bai2.modal.Dish;
+import org.restaurant.bai5.modal.Dish;
 import org.restaurant.bai5.modal.OrderItem;
 import org.restaurant.bai5.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;

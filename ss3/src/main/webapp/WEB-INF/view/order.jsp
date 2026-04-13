@@ -21,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="item" items="${foodslist}">
+    <c:forEach var="item" items="${food}">
         <tr>
             <td><c:out value="${item.getId()}"></c:out></td>
             <td>

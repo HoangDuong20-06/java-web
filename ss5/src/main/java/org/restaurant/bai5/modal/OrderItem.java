@@ -1,6 +1,6 @@
 package org.restaurant.bai5.modal;
 
-import org.restaurant.bai2.modal.Dish;
+import org.restaurant.bai5.modal.Dish;
 
 public class OrderItem {
     private Dish dish;

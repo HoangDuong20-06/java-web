@@ -21,7 +21,7 @@
         <p><strong>Giá:</strong> <span th:text="${dish.price}"></span></p>
         <form th:action="@{/bai5/order/add}" method="post">
             <input type="hidden" name="id" th:value="${dish.id}">
-            <input type="hidden" name="redirectUrl"  id="redirectUrl" th:value="@{'/bai5/dished/' + ${dish.id}}">
+            <input type="hidden" name="redirectUrl"  id="redirectUrl" th:value="@{'/bai5/dishes/' + ${dish.id}}">
             <button class="btn btn-success">🛒 Thêm vào giỏ</button>
         </form>
         <a class="btn btn-secondary mt-3" th:href="@{/bai5/dishes}">

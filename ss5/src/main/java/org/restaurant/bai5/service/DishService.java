@@ -1,6 +1,6 @@
 package org.restaurant.bai5.service;
 
-import org.restaurant.bai2.modal.Dish;
+import org.restaurant.bai5.modal.Dish;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

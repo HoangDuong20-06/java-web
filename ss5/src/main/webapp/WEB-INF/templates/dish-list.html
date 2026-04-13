@@ -12,11 +12,11 @@
         <h2 class="text-primary">Danh sách thực đơn</h2>
     </div>
 
-    <div th:if="${dishes == null or #lists.isEmpty(dishes)}" class="alert alert-warning text-center shadow-sm">
+    <div th:if="${dished == null or #lists.isEmpty(dished)}" class="alert alert-warning text-center shadow-sm">
         <p class="mb-0">Hiện tại nhà hàng đang cập nhật thực đơn, vui lòng quay lại sau!</p>
     </div>
 
-    <div class="card shadow-sm" th:unless="${dishes == null or #lists.isEmpty(dishes)}">
+    <div class="card shadow-sm" th:unless="${dished == null or #lists.isEmpty(dished)}">
         <div class="card-body p-0">
             <table class="table table-hover mb-0">
                 <thead class="table-light">
@@ -29,7 +29,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="dish : ${dishes}">
+                <tr th:each="dish : ${dished}">
                     <td class="ps-4" th:text="${dish.id}"></td>
                     <td><strong th:text="${dish.name}"></strong></td>
                     <td th:text="${#numbers.formatDecimal(dish.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>

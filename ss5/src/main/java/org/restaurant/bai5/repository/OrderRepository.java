@@ -1,6 +1,6 @@
 package org.restaurant.bai5.repository;
 
-import org.restaurant.bai2.modal.Dish;
+import org.restaurant.bai5.modal.Dish;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
